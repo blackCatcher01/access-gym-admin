@@ -9,6 +9,14 @@ const map = {
   expire: { label: 'Expiré', variante: 'danger' },
   annule: { label: 'Annulé', variante: 'neutral' },
   inactif: { label: 'Inactif', variante: 'neutral' },
+  confirme: { label: 'Confirmé', variante: 'success' },
+  en_attente: { label: 'En attente', variante: 'warning' },
+  echoue: { label: 'Échoué', variante: 'danger' },
+  confirmee: { label: 'Confirmée', variante: 'success' },
+  liste_attente: { label: "Liste d'attente", variante: 'warning' },
+  annulee: { label: 'Annulée', variante: 'neutral' },
+  autorise: { label: 'Autorisé', variante: 'success' },
+  refuse: { label: 'Refusé', variante: 'danger' },
 };
 
 const infos = map[props.statut] || { label: props.statut, variante: 'neutral' };

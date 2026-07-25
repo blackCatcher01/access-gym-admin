@@ -1,52 +1,52 @@
 /* ==========================================================================
    Design tokens — Access Gym Admin
-   Palette : teal profond (activité, santé) + corail (énergie, statuts actifs)
-   Signature : le "pulse" — un tracé d'activité utilisé avec parcimonie
+   Palette : bleu UVCI (confiance, structure) + violet (accent, énergie)
+   Repris de style.css / connexion.css (Plus Jakarta Sans, #4361EE, #7209B7)
    ========================================================================== */
 
 :root {
   /* -- Couleurs de marque -- */
-  --ag-primary-h: 174;
-  --ag-primary: #0f9b8e;
-  --ag-primary-hover: #0c8175;
-  --ag-primary-soft: #e3f6f4;
-  --ag-accent: #ff6b4a;
-  --ag-accent-soft: #ffe8e1;
+  --ag-primary-h: 231;
+  --ag-primary: #4361ee;
+  --ag-primary-hover: #3251d4;
+  --ag-primary-soft: #eaf0fe;
+  --ag-accent: #7209b7;
+  --ag-accent-soft: #f3e8fc;
 
-  --ag-success: #12b76a;
-  --ag-success-soft: #e6f9f0;
-  --ag-warning: #f5a524;
-  --ag-warning-soft: #fef3e0;
-  --ag-danger: #e5484d;
-  --ag-danger-soft: #fdeced;
-  --ag-info: #3b82f6;
-  --ag-info-soft: #e8f1fe;
+  --ag-success: #05c48a;
+  --ag-success-soft: #e7fbf3;
+  --ag-warning: #f7b731;
+  --ag-warning-soft: #fef5e0;
+  --ag-danger: #e63950;
+  --ag-danger-soft: #fdeef0;
+  --ag-info: #4cc9f0;
+  --ag-info-soft: #e8f7fe;
 
   /* -- Surfaces & texte (clair) -- */
-  --ag-bg: #f7f8fa;
+  --ag-bg: #eef2f7;
   --ag-surface: #ffffff;
-  --ag-surface-2: #f1f3f6;
-  --ag-border: #e4e7ec;
-  --ag-border-strong: #d0d5dd;
-  --ag-text: #12141a;
-  --ag-text-muted: #5b6472;
-  --ag-text-faint: #8a93a2;
+  --ag-surface-2: #f5f7fe;
+  --ag-border: #e3e8f0;
+  --ag-border-strong: #c7d0e0;
+  --ag-text: #1b2559;
+  --ag-text-muted: #8b94b2;
+  --ag-text-faint: #a9b1c9;
 
   /* -- Typographie -- */
-  --ag-font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
-  --ag-font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ag-font-display: 'Space Grotesk', 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --ag-font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --ag-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
   /* -- Forme -- */
   --ag-radius-sm: 6px;
-  --ag-radius-md: 10px;
-  --ag-radius-lg: 16px;
+  --ag-radius-md: 9px;
+  --ag-radius-lg: 14px;
   --ag-radius-xl: 22px;
 
   /* -- Ombres -- */
-  --ag-shadow-sm: 0 1px 2px rgba(16, 24, 32, 0.06);
-  --ag-shadow-md: 0 4px 16px rgba(16, 24, 32, 0.08);
-  --ag-shadow-lg: 0 12px 32px rgba(16, 24, 32, 0.12);
+  --ag-shadow-sm: 0 2px 14px rgba(27, 37, 89, 0.07);
+  --ag-shadow-md: 0 8px 28px rgba(67, 97, 238, 0.14);
+  --ag-shadow-lg: 0 12px 32px rgba(27, 37, 89, 0.18);
 
   /* -- Transitions -- */
   --ag-ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -54,7 +54,7 @@
 
   /* -- Remap Bootstrap -- */
   --bs-primary: var(--ag-primary);
-  --bs-primary-rgb: 15, 155, 142;
+  --bs-primary-rgb: 67, 97, 238;
   --bs-body-bg: var(--ag-bg);
   --bs-body-color: var(--ag-text);
   --bs-border-color: var(--ag-border);
@@ -67,36 +67,37 @@
 }
 
 [data-bs-theme='dark'] {
-  --ag-primary: #29d3c0;
-  --ag-primary-hover: #4fe0cf;
-  --ag-primary-soft: #0f2b28;
-  --ag-accent: #ff8262;
-  --ag-accent-soft: #3a1f16;
+  /* Base neutre froide quasi-noire, façon GitHub dark */
+  --ag-primary: #6b8aff;
+  --ag-primary-hover: #8ba0ff;
+  --ag-primary-soft: #1c2333;
+  --ag-accent: #c081f5;
+  --ag-accent-soft: #241b30;
 
-  --ag-success: #35e08c;
-  --ag-success-soft: #0f2b1e;
-  --ag-warning: #ffbd50;
-  --ag-warning-soft: #2e2211;
-  --ag-danger: #ff6b70;
-  --ag-danger-soft: #331416;
-  --ag-info: #63a4ff;
-  --ag-info-soft: #10233f;
+  --ag-success: #3fb950;
+  --ag-success-soft: #12261a;
+  --ag-warning: #d29922;
+  --ag-warning-soft: #2b2111;
+  --ag-danger: #f85149;
+  --ag-danger-soft: #2c1517;
+  --ag-info: #58a6ff;
+  --ag-info-soft: #131f2e;
 
-  --ag-bg: #0b0f14;
-  --ag-surface: #11161d;
-  --ag-surface-2: #161c25;
-  --ag-border: #232a35;
-  --ag-border-strong: #2e3644;
-  --ag-text: #e7ebf0;
-  --ag-text-muted: #8b95a5;
-  --ag-text-faint: #626c7a;
+  --ag-bg: #0d1117;
+  --ag-surface: #161b22;
+  --ag-surface-2: #21262d;
+  --ag-border: #30363d;
+  --ag-border-strong: #484f58;
+  --ag-text: #e6edf3;
+  --ag-text-muted: #8b949e;
+  --ag-text-faint: #6e7681;
 
-  --ag-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --ag-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
-  --ag-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --ag-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --ag-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.55);
+  --ag-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.65);
 
   --bs-primary: var(--ag-primary);
-  --bs-primary-rgb: 41, 211, 192;
+  --bs-primary-rgb: 107, 138, 255;
   --bs-body-bg: var(--ag-bg);
   --bs-body-color: var(--ag-text);
   --bs-border-color: var(--ag-border);

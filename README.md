@@ -44,14 +44,29 @@ src/
 
 ## État d'avancement
 
-✅ **Construit** : authentification OTP (2 étapes), coquille de layout (sidebar rétractable + responsive, topbar), tableau de bord (KPIs), module Utilisateurs (adhérents/staff, tableau, tiroir de détail, activation/désactivation), page Paramètres, système de design complet (clair/sombre).
+✅ **Construit** : authentification OTP (2 étapes), coquille de layout (sidebar rétractable + responsive, topbar), tableau de bord (KPIs), et **tous les modules métier** :
+- Utilisateurs (adhérents/staff, tiroir de détail, activation/désactivation)
+- Abonnements (filtre par statut, renouvellement)
+- Paiements (filtres statut + moyen, total confirmé)
+- Cours (planning, création via modale avec validation temps réel, indicateur de remplissage)
+- Réservations (filtre par statut, annulation avec confirmation)
+- Établissement (informations de la salle, formulaire validé en temps réel)
+- Journal d'audit (lecture seule)
+- Paramètres (profil, thème)
 
-🔜 **Prochaines étapes** (même structure, à dupliquer depuis le module Utilisateurs) :
-- Module Abonnements (liste, création, renouvellement)
-- Module Paiements (historique, filtre par statut/moyen de paiement)
-- Module Cours & réservations (calendrier, capacité)
-- Module Salles (si multi-établissements) + Journal d'audit
-- Endpoints backend correspondants : `GET /api/adherents`, `GET /api/staff`, etc. (actuellement en données de démonstration côté `UsersView.vue`, basculement automatique dès que l'API répond)
+Système de design complet (clair/sombre), tous les modules bâtis sur les mêmes composants réutilisables (`DataTable`, `StatusPill`, `AgDrawer`, `AgModal`, `useToast`, `useConfirm`) pour une cohérence totale.
+
+🔜 **Prochaine étape** : brancher les endpoints backend correspondants. Chaque module bascule **automatiquement** sur des données de démonstration si son endpoint n'existe pas encore côté API (bandeau orange visible) — l'interface reste donc pleinement navigable et démontrable dès maintenant, module par module :
+
+| Module | Endpoint attendu |
+|---|---|
+| Utilisateurs | `GET /api/adherents`, `GET /api/staff` |
+| Abonnements | `GET /api/abonnements`, `POST /api/abonnements/{id}/renouveler` |
+| Paiements | `GET /api/paiements` |
+| Cours | `GET/POST/PATCH/DELETE /api/cours` |
+| Réservations | `GET /api/reservations`, `PATCH /api/reservations/{id}` |
+| Établissement | `GET/PATCH /api/salle` |
+| Journal d'audit | `GET /api/journal-audit` |
 
 ## Scripts
 

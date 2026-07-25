@@ -15,16 +15,17 @@ const groupes = [
     titre: 'Gestion',
     items: [
       { nom: 'utilisateurs', label: 'Utilisateurs', icone: 'bi-people' },
-      { label: 'Abonnements', icone: 'bi-card-checklist', bientot: true },
-      { label: 'Paiements', icone: 'bi-cash-coin', bientot: true },
-      { label: 'Cours & réservations', icone: 'bi-calendar3', bientot: true },
+      { nom: 'abonnements', label: 'Abonnements', icone: 'bi-card-checklist' },
+      { nom: 'paiements', label: 'Paiements', icone: 'bi-cash-coin' },
+      { nom: 'cours', label: 'Cours', icone: 'bi-calendar3' },
+      { nom: 'reservations', label: 'Réservations', icone: 'bi-bookmark-check' },
     ],
   },
   {
     titre: 'Établissement',
     items: [
-      { label: 'Salles', icone: 'bi-building', bientot: true },
-      { label: 'Journal d\'audit', icone: 'bi-shield-check', bientot: true },
+      { nom: 'etablissement', label: 'Salle', icone: 'bi-building' },
+      { nom: 'journal-audit', label: "Journal d'audit", icone: 'bi-shield-check' },
     ],
   },
   {
