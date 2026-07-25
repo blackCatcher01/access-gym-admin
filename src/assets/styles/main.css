@@ -1,0 +1,149 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import './tokens.css';
+
+html {
+  color-scheme: light;
+}
+[data-bs-theme='dark'] html,
+html[data-bs-theme='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--ag-font-body);
+  background: var(--ag-bg);
+  color: var(--ag-text);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color var(--ag-duration) var(--ag-ease);
+}
+
+h1, h2, h3, h4, h5, .ag-display {
+  font-family: var(--ag-font-display);
+  letter-spacing: -0.01em;
+}
+
+.ag-mono {
+  font-family: var(--ag-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Focus visible cohérent, jamais supprimé */
+:focus-visible {
+  outline: 2px solid var(--ag-primary);
+  outline-offset: 2px;
+  border-radius: var(--ag-radius-sm);
+}
+
+/* Scrollbar discrète */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--ag-border-strong);
+  border-radius: 999px;
+  border: 3px solid var(--ag-bg);
+}
+
+/* -- Cartes / surfaces -- */
+.ag-card {
+  background: var(--ag-surface);
+  border: 1px solid var(--ag-border);
+  border-radius: var(--ag-radius-lg);
+  box-shadow: var(--ag-shadow-sm);
+  transition: box-shadow var(--ag-duration) var(--ag-ease), transform var(--ag-duration) var(--ag-ease);
+}
+.ag-card--hover:hover {
+  box-shadow: var(--ag-shadow-md);
+  transform: translateY(-1px);
+}
+
+.ag-surface-2 { background: var(--ag-surface-2); }
+.ag-text-muted { color: var(--ag-text-muted) !important; }
+.ag-text-faint { color: var(--ag-text-faint) !important; }
+.ag-border { border-color: var(--ag-border) !important; }
+
+/* -- Boutons : coins plus doux, transitions -- */
+.btn {
+  border-radius: var(--ag-radius-md);
+  font-weight: 500;
+  transition: all var(--ag-duration) var(--ag-ease);
+}
+.btn-primary {
+  background: var(--ag-primary);
+  border-color: var(--ag-primary);
+}
+.btn-primary:hover, .btn-primary:focus {
+  background: var(--ag-primary-hover);
+  border-color: var(--ag-primary-hover);
+  transform: translateY(-1px);
+}
+.btn-accent {
+  background: var(--ag-accent);
+  border-color: var(--ag-accent);
+  color: #fff;
+}
+.btn-accent:hover { filter: brightness(1.06); color: #fff; }
+
+/* -- Pastilles de statut -- */
+.ag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+.ag-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.ag-pill--success { background: var(--ag-success-soft); color: var(--ag-success); }
+.ag-pill--warning { background: var(--ag-warning-soft); color: var(--ag-warning); }
+.ag-pill--danger  { background: var(--ag-danger-soft);  color: var(--ag-danger); }
+.ag-pill--info    { background: var(--ag-info-soft);    color: var(--ag-info); }
+.ag-pill--neutral { background: var(--ag-surface-2); color: var(--ag-text-muted); }
+
+/* -- Tableaux -- */
+.ag-table {
+  --bs-table-bg: transparent;
+  font-size: 0.875rem;
+}
+.ag-table thead th {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ag-text-faint);
+  font-weight: 600;
+  border-bottom: 1px solid var(--ag-border);
+  padding-block: 0.75rem;
+}
+.ag-table tbody td {
+  padding-block: 0.85rem;
+  border-bottom: 1px solid var(--ag-border);
+  vertical-align: middle;
+}
+.ag-table tbody tr {
+  transition: background-color var(--ag-duration) var(--ag-ease);
+}
+.ag-table tbody tr:hover {
+  background: var(--ag-surface-2);
+}
+
+/* -- Transitions de page -- */
+.page-fade-enter-active, .page-fade-leave-active {
+  transition: opacity 140ms var(--ag-ease), transform 140ms var(--ag-ease);
+}
+.page-fade-enter-from { opacity: 0; transform: translateY(4px); }
+.page-fade-leave-to { opacity: 0; transform: translateY(-4px); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Design tokens — Access Gym Admin
+   Palette : teal profond (activité, santé) + corail (énergie, statuts actifs)
+   Signature : le "pulse" — un tracé d'activité utilisé avec parcimonie
+   ========================================================================== */
+
+:root {
+  /* -- Couleurs de marque -- */
+  --ag-primary-h: 174;
+  --ag-primary: #0f9b8e;
+  --ag-primary-hover: #0c8175;
+  --ag-primary-soft: #e3f6f4;
+  --ag-accent: #ff6b4a;
+  --ag-accent-soft: #ffe8e1;
+
+  --ag-success: #12b76a;
+  --ag-success-soft: #e6f9f0;
+  --ag-warning: #f5a524;
+  --ag-warning-soft: #fef3e0;
+  --ag-danger: #e5484d;
+  --ag-danger-soft: #fdeced;
+  --ag-info: #3b82f6;
+  --ag-info-soft: #e8f1fe;
+
+  /* -- Surfaces & texte (clair) -- */
+  --ag-bg: #f7f8fa;
+  --ag-surface: #ffffff;
+  --ag-surface-2: #f1f3f6;
+  --ag-border: #e4e7ec;
+  --ag-border-strong: #d0d5dd;
+  --ag-text: #12141a;
+  --ag-text-muted: #5b6472;
+  --ag-text-faint: #8a93a2;
+
+  /* -- Typographie -- */
+  --ag-font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
+  --ag-font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ag-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* -- Forme -- */
+  --ag-radius-sm: 6px;
+  --ag-radius-md: 10px;
+  --ag-radius-lg: 16px;
+  --ag-radius-xl: 22px;
+
+  /* -- Ombres -- */
+  --ag-shadow-sm: 0 1px 2px rgba(16, 24, 32, 0.06);
+  --ag-shadow-md: 0 4px 16px rgba(16, 24, 32, 0.08);
+  --ag-shadow-lg: 0 12px 32px rgba(16, 24, 32, 0.12);
+
+  /* -- Transitions -- */
+  --ag-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ag-duration: 180ms;
+
+  /* -- Remap Bootstrap -- */
+  --bs-primary: var(--ag-primary);
+  --bs-primary-rgb: 15, 155, 142;
+  --bs-body-bg: var(--ag-bg);
+  --bs-body-color: var(--ag-text);
+  --bs-border-color: var(--ag-border);
+  --bs-border-radius: var(--ag-radius-md);
+  --bs-border-radius-sm: var(--ag-radius-sm);
+  --bs-border-radius-lg: var(--ag-radius-lg);
+  --bs-font-sans-serif: var(--ag-font-body);
+  --bs-link-color: var(--ag-primary);
+  --bs-link-hover-color: var(--ag-primary-hover);
+}
+
+[data-bs-theme='dark'] {
+  --ag-primary: #29d3c0;
+  --ag-primary-hover: #4fe0cf;
+  --ag-primary-soft: #0f2b28;
+  --ag-accent: #ff8262;
+  --ag-accent-soft: #3a1f16;
+
+  --ag-success: #35e08c;
+  --ag-success-soft: #0f2b1e;
+  --ag-warning: #ffbd50;
+  --ag-warning-soft: #2e2211;
+  --ag-danger: #ff6b70;
+  --ag-danger-soft: #331416;
+  --ag-info: #63a4ff;
+  --ag-info-soft: #10233f;
+
+  --ag-bg: #0b0f14;
+  --ag-surface: #11161d;
+  --ag-surface-2: #161c25;
+  --ag-border: #232a35;
+  --ag-border-strong: #2e3644;
+  --ag-text: #e7ebf0;
+  --ag-text-muted: #8b95a5;
+  --ag-text-faint: #626c7a;
+
+  --ag-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --ag-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --ag-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+  --bs-primary: var(--ag-primary);
+  --bs-primary-rgb: 41, 211, 192;
+  --bs-body-bg: var(--ag-bg);
+  --bs-body-color: var(--ag-text);
+  --bs-border-color: var(--ag-border);
+}
