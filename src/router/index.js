@@ -82,18 +82,18 @@ const router = createRouter({
   scrollBehavior: () => ({ top: 0 }),
 });
 
-// router.beforeEach((to) => {
-//   const auth = useAuthStore();
+router.beforeEach((to) => {
+  const auth = useAuthStore();
 
-//   if (!to.meta.public && !auth.estConnecte) {
-//     return { name: 'connexion', query: { redirect: to.fullPath } };
-//   }
+  if (!to.meta.public && !auth.estConnecte) {
+    return { name: 'connexion', query: { redirect: to.fullPath } };
+  }
 
-//   if (to.name === 'connexion' && auth.estConnecte) {
-//     return { name: 'tableau-de-bord' };
-//   }
+  if (to.name === 'connexion' && auth.estConnecte) {
+    return { name: 'tableau-de-bord' };
+  }
 
-//   return true;
-// });
+  return true;
+});
 
 export default router;

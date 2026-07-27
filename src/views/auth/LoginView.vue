@@ -146,7 +146,7 @@ async function confirmerCode() {
   width: 100%;
 }
 .ag-login__showcase {
-  background: linear-gradient(160deg, var(--ag-primary) 0%, #0a6f65 100%);
+  background: linear-gradient(160deg, var(--ag-primary) 0%, var(--ag-accent) 100%);
   align-items: center;
   justify-content: center;
   padding: 3rem;
