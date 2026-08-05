@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import DataTable from '@/components/ui/DataTable.vue';
 import StatusPill from '@/components/ui/StatusPill.vue';
 import AgDrawer from '@/components/ui/AgDrawer.vue';
+<<<<<<< HEAD
 import AgModal from '@/components/ui/AgModal.vue';
 import { listerAdherents, listerStaff, creerStaff, creerAdherent } from '@/api/utilisateurs';
 import { listerToutesSalles } from '@/api/salles';
@@ -13,6 +14,14 @@ import { useAuthStore } from '@/stores/auth';
 const toast = useToast();
 const { demander } = useConfirm();
 const auth = useAuthStore();
+=======
+import { listerAdherents, listerStaff } from '@/api/utilisateurs';
+import { useToast } from '@/composables/useToast';
+import { useConfirm } from '@/composables/useConfirm';
+
+const toast = useToast();
+const { demander } = useConfirm();
+>>>>>>> b6abe7a77e33d0d33a298282afec9127759e80fe
 
 const onglet = ref('adherents');
 const chargement = ref(true);
@@ -59,6 +68,11 @@ async function charger() {
     staff.value = resStaff.data;
     donneesDemo.value = false;
   } catch {
+<<<<<<< HEAD
+=======
+    // Endpoints pas encore construits côté backend : on affiche des
+    // données de démonstration pour garder l'interface exploitable.
+>>>>>>> b6abe7a77e33d0d33a298282afec9127759e80fe
     adherents.value = adherentsDemo;
     staff.value = staffDemo;
     donneesDemo.value = true;
@@ -94,7 +108,7 @@ const enregistrement = ref(false);
 const erreurSoumission = ref('');
 const sallesDisponibles = ref([]);
 
-const estSuperAdmin = computed(() => auth.utilisateur?.role === 'super_admin' || auth.aAccesAdmin);
+const estSuperAdmin = computed(() => auth.estSuperAdmin);
 
 const formAdherent = ref({ nom: '', prenom: '', telephone: '', date_naissance: '', sexe: '', email: '' });
 const formStaff = ref({ nom: '', prenom: '', telephone: '', role_staff: 'coach', id_salle: null, date_embauche: '' });
