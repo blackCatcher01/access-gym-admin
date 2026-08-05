@@ -9,7 +9,9 @@ export function modifierSalle(donnees) {
   return client.patch('/salle', donnees);
 }
 
-// Endpoint reel (Phase 2) : liste des salles avec leurs formules actives.
-export function listerSalles(params = {}) {
+// Toutes les salles de la plateforme — utilise par le super_admin pour
+// choisir a quelle salle rattacher un nouveau gerant (endpoint deja
+// existant, consomme par l'app mobile pour la liste "Salles").
+export function listerToutesSalles(params = {}) {
   return client.get('/salles', { params });
 }

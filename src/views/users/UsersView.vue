@@ -3,12 +3,16 @@ import { ref, computed, onMounted } from 'vue';
 import DataTable from '@/components/ui/DataTable.vue';
 import StatusPill from '@/components/ui/StatusPill.vue';
 import AgDrawer from '@/components/ui/AgDrawer.vue';
-import { listerAdherents, listerStaff } from '@/api/utilisateurs';
+import AgModal from '@/components/ui/AgModal.vue';
+import { listerAdherents, listerStaff, creerStaff, creerAdherent } from '@/api/utilisateurs';
+import { listerToutesSalles } from '@/api/salles';
 import { useToast } from '@/composables/useToast';
 import { useConfirm } from '@/composables/useConfirm';
+import { useAuthStore } from '@/stores/auth';
 
 const toast = useToast();
 const { demander } = useConfirm();
+const auth = useAuthStore();
 
 const onglet = ref('adherents');
 const chargement = ref(true);
@@ -55,8 +59,6 @@ async function charger() {
     staff.value = resStaff.data;
     donneesDemo.value = false;
   } catch {
-    // Endpoints pas encore construits côté backend : on affiche des
-    // données de démonstration pour garder l'interface exploitable.
     adherents.value = adherentsDemo;
     staff.value = staffDemo;
     donneesDemo.value = true;
@@ -86,6 +88,74 @@ async function basculerStatut(ligne) {
   toast.succes(activer ? 'Compte réactivé.' : 'Compte désactivé.');
 }
 
+// -- Création de compte --
+const modaleOuverte = ref(false);
+const enregistrement = ref(false);
+const erreurSoumission = ref('');
+const sallesDisponibles = ref([]);
+
+const estSuperAdmin = computed(() => auth.utilisateur?.role === 'super_admin' || auth.aAccesAdmin);
+
+const formAdherent = ref({ nom: '', prenom: '', telephone: '', date_naissance: '', sexe: '', email: '' });
+const formStaff = ref({ nom: '', prenom: '', telephone: '', role_staff: 'coach', id_salle: null, date_embauche: '' });
+
+const erreursAdherent = computed(() => ({
+  nom: formAdherent.value.nom.trim().length < 2 ? 'Nom requis.' : null,
+  prenom: formAdherent.value.prenom.trim().length < 2 ? 'Prénom requis.' : null,
+  telephone: !/^\+?[0-9]{8,15}$/.test(formAdherent.value.telephone.trim()) ? 'Numéro invalide.' : null,
+  date_naissance: !formAdherent.value.date_naissance ? 'Date requise.' : null,
+  sexe: !formAdherent.value.sexe ? 'Sélection requise.' : null,
+}));
+const formAdherentValide = computed(() => Object.values(erreursAdherent.value).every((e) => !e));
+
+const erreursStaff = computed(() => ({
+  nom: formStaff.value.nom.trim().length < 2 ? 'Nom requis.' : null,
+  prenom: formStaff.value.prenom.trim().length < 2 ? 'Prénom requis.' : null,
+  telephone: !/^\+?[0-9]{8,15}$/.test(formStaff.value.telephone.trim()) ? 'Numéro invalide.' : null,
+  id_salle: estSuperAdmin.value && !formStaff.value.id_salle ? 'Salle requise.' : null,
+}));
+const formStaffValide = computed(() => Object.values(erreursStaff.value).every((e) => !e));
+
+async function ouvrirModaleCreation() {
+  erreurSoumission.value = '';
+  if (onglet.value === 'adherents') {
+    formAdherent.value = { nom: '', prenom: '', telephone: '', date_naissance: '', sexe: '', email: '' };
+  } else {
+    formStaff.value = { nom: '', prenom: '', telephone: '', role_staff: 'coach', id_salle: null, date_embauche: '' };
+    if (estSuperAdmin.value && sallesDisponibles.value.length === 0) {
+      try {
+        const { data } = await listerToutesSalles({ par_page: 100 });
+        sallesDisponibles.value = data.data ?? data;
+      } catch {
+        sallesDisponibles.value = [];
+      }
+    }
+  }
+  modaleOuverte.value = true;
+}
+
+async function soumettreCreation() {
+  erreurSoumission.value = '';
+  enregistrement.value = true;
+  try {
+    if (onglet.value === 'adherents') {
+      if (!formAdherentValide.value) return;
+      await creerAdherent({ ...formAdherent.value });
+      toast.succes('Adhérent créé.');
+    } else {
+      if (!formStaffValide.value) return;
+      await creerStaff({ ...formStaff.value });
+      toast.succes('Membre du staff créé.');
+    }
+    modaleOuverte.value = false;
+    charger();
+  } catch (e) {
+    erreurSoumission.value = e.response?.data?.message || "Impossible de créer ce compte.";
+  } finally {
+    enregistrement.value = false;
+  }
+}
+
 onMounted(charger);
 </script>
 
@@ -96,7 +166,7 @@ onMounted(charger);
         <h2 class="h4 mb-1">Utilisateurs</h2>
         <p class="ag-text-muted mb-0">Adhérents et personnel de votre établissement.</p>
       </div>
-      <button class="btn btn-primary d-inline-flex align-items-center gap-2">
+      <button class="btn btn-primary d-inline-flex align-items-center gap-2" @click="ouvrirModaleCreation">
         <i class="bi bi-plus-lg"></i> Ajouter
       </button>
     </div>
@@ -184,6 +254,97 @@ onMounted(charger);
         </button>
       </template>
     </AgDrawer>
+
+    <AgModal
+      :ouverte="modaleOuverte"
+      :titre="onglet === 'adherents' ? 'Nouvel adhérent' : 'Nouveau membre du staff'"
+      @fermer="modaleOuverte = false"
+    >
+      <form v-if="onglet === 'adherents'" class="d-flex flex-column gap-3" @submit.prevent="soumettreCreation">
+        <div class="row g-3">
+          <div class="col-6">
+            <label class="form-label small fw-medium">Prénom</label>
+            <input v-model="formAdherent.prenom" type="text" class="form-control" />
+          </div>
+          <div class="col-6">
+            <label class="form-label small fw-medium">Nom</label>
+            <input v-model="formAdherent.nom" type="text" class="form-control" />
+          </div>
+        </div>
+        <div>
+          <label class="form-label small fw-medium">Téléphone</label>
+          <input v-model="formAdherent.telephone" type="tel" class="form-control" placeholder="+225 ..." />
+        </div>
+        <div class="row g-3">
+          <div class="col-6">
+            <label class="form-label small fw-medium">Date de naissance</label>
+            <input v-model="formAdherent.date_naissance" type="date" class="form-control" />
+          </div>
+          <div class="col-6">
+            <label class="form-label small fw-medium">Sexe</label>
+            <select v-model="formAdherent.sexe" class="form-select">
+              <option value="" disabled>Choisir</option>
+              <option value="homme">Homme</option>
+              <option value="femme">Femme</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="form-label small fw-medium">E-mail (optionnel)</label>
+          <input v-model="formAdherent.email" type="email" class="form-control" />
+        </div>
+      </form>
+
+      <form v-else class="d-flex flex-column gap-3" @submit.prevent="soumettreCreation">
+        <div class="row g-3">
+          <div class="col-6">
+            <label class="form-label small fw-medium">Prénom</label>
+            <input v-model="formStaff.prenom" type="text" class="form-control" />
+          </div>
+          <div class="col-6">
+            <label class="form-label small fw-medium">Nom</label>
+            <input v-model="formStaff.nom" type="text" class="form-control" />
+          </div>
+        </div>
+        <div>
+          <label class="form-label small fw-medium">Téléphone</label>
+          <input v-model="formStaff.telephone" type="tel" class="form-control" placeholder="+225 ..." />
+        </div>
+        <div>
+          <label class="form-label small fw-medium">Rôle</label>
+          <select v-model="formStaff.role_staff" class="form-select">
+            <option value="coach">Coach</option>
+            <option v-if="estSuperAdmin" value="gerant">Gérant</option>
+          </select>
+        </div>
+        <div v-if="estSuperAdmin">
+          <label class="form-label small fw-medium">Salle</label>
+          <select v-model="formStaff.id_salle" class="form-select">
+            <option :value="null" disabled>Choisir une salle</option>
+            <option v-for="s in sallesDisponibles" :key="s.id_salle" :value="s.id_salle">{{ s.nom_salle }}</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label small fw-medium">Date d'embauche (optionnel)</label>
+          <input v-model="formStaff.date_embauche" type="date" class="form-control" />
+        </div>
+      </form>
+
+      <p v-if="erreurSoumission" class="text-danger small mt-3 mb-0">{{ erreurSoumission }}</p>
+
+      <template #footer>
+        <button class="btn btn-outline-secondary" @click="modaleOuverte = false">Annuler</button>
+        <button
+          class="btn btn-primary"
+          :disabled="enregistrement || (onglet === 'adherents' ? !formAdherentValide : !formStaffValide)"
+          @click="soumettreCreation"
+        >
+          <span v-if="enregistrement" class="spinner-border spinner-border-sm me-2"></span>
+          Créer le compte
+        </button>
+      </template>
+    </AgModal>
   </div>
 </template>
 
